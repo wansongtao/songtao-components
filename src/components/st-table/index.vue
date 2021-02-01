@@ -10,14 +10,14 @@
       >
         <colgroup>
           <col name="table-col-check" width="50" v-if="checkbox" />
-          <template v-for="item in title">
+          <template v-for="(item, index) in title">
             <col
-              :name="'table-col-' + item.name"
+              :name="'table-col-' + index"
               :width="item.width"
-              :key="item.name"
+              :key="index"
               v-if="item.width && item.width > 0"
             />
-            <col :name="'table-col-' + item.name" :key="item.name" v-else />
+            <col :name="'table-col-' + index" :key="index" v-else />
           </template>
         </colgroup>
         <thead>
@@ -34,12 +34,12 @@
                 />
               </div>
             </th>
-            <template v-for="item in title">
+            <template v-for="(item, index) in title">
               <th
                 colspan="1"
                 rowspan="1"
-                :class="'table-col-' + item.name"
-                :key="item.name"
+                :class="'table-col-' + index"
+                :key="index"
                 :style="theadStyle"
               >
                 <div class="cell">{{ item.title }}</div>
@@ -68,11 +68,11 @@
                 />
               </div>
             </td>
-            <template v-for="(val, key) in item">
+            <template v-for="(val, key, tdIndex) in item">
               <td
                 colspan="1"
                 rowspan="1"
-                :class="'table-col-' + key"
+                :class="'table-col-' + tdIndex"
                 :key="key"
                 :style="tbodyStyle"
               >
@@ -98,7 +98,7 @@ export default {
       required: false
     },
     title: {
-      /** 表头, 格式：[{title: '表头标题', name: '字段名(要求和data的key一样)。注意：当name为operation时，将开启插槽。', width: 100(可选)}] */
+      /** 表头, 格式：[{title: '表头标题', width: 100(可选)}] */
       type: Array,
       required: true
     },

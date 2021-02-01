@@ -21,26 +21,20 @@ export default {
       thead: [
         {
           title: '供应商编号',
-          name: 'supplierId',
           width: 150
         },
         {
           title: '供应商名称',
-          name: 'supplierName',
           width: 200
         },
         {
-          title: '项目主担',
-          name: 'projectPrincipal'
+          title: '项目主担'
         },
         {
-          title: '线路主担',
-          name: 'linePrincipal'
+          title: '线路主担'
         },
         {
-          // 注意：当name为operation时，将开启插槽。可插入自定义的按钮等内容
           title: '操作',
-          name: 'operation',
           width: 100
         }
       ],
@@ -51,6 +45,7 @@ export default {
           projectPrincipal:
             '张叁、李肆、宋智、陈冬张叁、李肆、宋智、陈冬张叁、李肆、宋智、陈冬张叁、李肆、宋智、陈冬',
           linePrincipal: '王大锤、陈冬冬、肖赞赞',
+          // 注意：当name为operation时，将开启插槽。可插入自定义的按钮等内容
           operation: '1'
         },
         {
