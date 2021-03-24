@@ -1,7 +1,10 @@
 <template>
-  <div id="app">
-    <router-link to="/">Home</router-link>
-    <router-link to="/about">Home</router-link>
+  <div id="app" v-water-mark>
+    <div id="nav">
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">about</router-link>
+    </div>
+    <router-view />
   </div>
 </template>
 
@@ -12,15 +15,15 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 100vw;
-  height: 100vh;
-  background: #eee;
+  width: 100%;
+  min-height: calc(100vh - 16px);
 }
 
 #nav {
   padding: 30px;
 
   a {
+    padding: 10px;
     font-weight: bold;
     color: #2c3e50;
 
