@@ -2,7 +2,7 @@
   <div class="wst">
     <Select
       :list="selectList"
-      value="苹果"
+      value=""
       placeholder="请选中您喜欢的水果"
       label="水果："
       :maxheight="240"

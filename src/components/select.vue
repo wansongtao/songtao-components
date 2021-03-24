@@ -1,28 +1,31 @@
 <template>
   <div class="select" v-click-outside="closeSelect" :style="`width: ${width};`">
-    <div class="label" v-if="label">{{label}}</div>
-    <div class="item">
-      <input
-        type="text"
-        :value="text"
-        :placeholder="placeholder"
-        readonly
-      />
+    <div class="label" v-if="label">{{ label }}</div>
+    <div class="item" @click="openSelect">
+      <input type="text" :value="text" :placeholder="placeholder" readonly />
       <div
-        :class="{ 'item-btn': true, 'active-btn': open }"
-        @click="openSelect"
+        :class="{
+          'item-btn': true,
+          'active-btn': open,
+          'clear-btn': text !== '',
+        }"
       >
         <div class="arrow"></div>
+        <span @click.stop="clearValue">x</span>
       </div>
       <div
         class="select-list"
-        :style="open ? `padding: 10px 15px;height: ${selectHeight + 20}px;` : 'height: 0px;'"
+        :style="
+          open
+            ? `padding: 10px 15px;height: ${selectHeight + 20}px;`
+            : 'height: 0px;'
+        "
       >
         <div
           :class="['select-item', selectIndex === index ? 'active-item' : '']"
           v-for="(item, index) in list"
           :key="index"
-          @click="selectHandler(index)"
+          @click.stop="selectHandler(index)"
         >
           {{ item.text }}
         </div>
@@ -34,7 +37,8 @@
 <script>
 export default {
   props: {
-    list: { // 下拉选择项的数据
+    list: {
+      // 下拉选择项的数据
       type: Array,
       // eslint-disable-next-line vue/require-valid-default-prop
       default: function () {
@@ -44,23 +48,28 @@ export default {
         ]
       }
     },
-    value: { // 默认选中的值，可不传
+    value: {
+      // 默认选中的值，可不传
       type: [String, Number],
       default: ''
     },
-    placeholder: { // 提示语
+    placeholder: {
+      // 提示语
       type: String,
       default: '请选择'
     },
-    width: { // 选择框宽度
+    width: {
+      // 选择框宽度
       type: String,
       default: '300px'
     },
-    label: { // label文本，不传则不显示
+    label: {
+      // label文本，不传则不显示
       type: String,
       default: ''
     },
-    maxheight: { // 下拉选择框的最大高度，超出则出现滚动条
+    maxheight: {
+      // 下拉选择框的最大高度，超出则出现滚动条
       type: Number,
       default: 200
     }
@@ -125,6 +134,13 @@ export default {
      */
     closeSelect () {
       this.open = false
+    },
+    /**
+     * @description 清空所选择的值
+     */
+    clearValue () {
+      this.selectIndex = -1
+      this.text = ''
     }
   }
 }
@@ -154,6 +170,7 @@ export default {
       border: none;
       background: #f1f3f6;
       border-radius: 8px;
+      cursor: pointer;
 
       &::placeholder {
         font-size: 12px;
@@ -172,6 +189,20 @@ export default {
       height: 30px;
       cursor: pointer;
       transition: all 0.5s;
+
+      span {
+        display: none;
+      }
+    }
+
+    .clear-btn {
+      &:hover span {
+        display: block;
+      }
+
+      &:hover .arrow {
+        display: none;
+      }
     }
 
     .active-btn {
@@ -218,12 +249,17 @@ export default {
   .select-item {
     display: flex;
     align-items: center;
+    margin: 5px 0;
     padding-left: 10px;
-    height: 40px;
+    height: 30px;
     font-size: 18px;
     color: #666;
     cursor: pointer;
     border-radius: 8px;
+
+    &:hover {
+      background: #999;
+    }
   }
 
   .active-item {
